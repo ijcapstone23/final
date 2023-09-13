@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+
+<head>
+    <title>Dongle</title>
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#myForm").on("submit", function (e) {
+                e.preventDefault(); // Prevent the default form submission
+
+                // Get the value of the 'q' input field
+                var qValue = $("#qInput").val();
+
+                // Construct the URL with the dynamic 'q' value
+                var redirectUrl = "/result/" + qValue + "/";
+
+                // Redirect to the constructed URL
+                window.location.href = redirectUrl;
+            });
+        });
+    </script>
+
+</head>
+
+<body>
+
+    <div id="view" style="height: 100%; text-align: center;">
+        <br style="line-height: 200%">
+        <p style="text-align:center"><span style="font-family:Arial,Helvetica,sans-serif"><strong><span
+                        style="font-size:100px"><span style="color:#4285f4">D</span><span
+                            style="color:#ea4335">o</span><span style="color:#fbbc05">n</span><span
+                            style="color:#4285f4">g</span><span style="color:#34a853">l</span><span
+                            style="color:#ea4335">e</span></span></strong></span></p>
+        <br>
+        <form id="myForm" method="post" action="#">{% csrf_token %}
+            <p style="text-align:center"><input id="qInput" type="search" style="width:530px;height:24pt" name="q"
+                    required></input></p>
+            <br style="line-height: 50%">
+            <div id="table" style="text-align: center;">
+                <table style="border:none;margin-left:auto;margin-right:auto;">
+                    <tbody>
+                        <tr>
+                            <td><button style="line-height: 15pt;">&nbsp;Dongle 상품 검색&nbsp;</button></td>
+                            <td>&nbsp;&nbsp;&nbsp;</td>
+                            <td><button class="donggle" type="button" style="line-height: 15pt;">&nbsp;I'm feeling <span
+                                        style="font-variant: small-caps;">OaO</span>&nbsp;</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </form>
+    </div>
+
+</body>
+
+</html>

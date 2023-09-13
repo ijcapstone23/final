@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+
+<head>
+    <title>상세 검색 결과</title>
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#myForm").on("submit", function (e) {
+                e.preventDefault(); // Prevent the default form submission
+
+                // Get the value of the 'q' input field
+                var qValue = $("#qInput").val();
+
+                // Construct the URL with the dynamic 'q' value
+                var redirectUrl = "/result/" + qValue + "/";
+
+                // Redirect to the constructed URL
+                window.location.href = redirectUrl;
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <table style="border:none;margin-left:none;margin-right:none;">
+        <tbody>
+            <tr>
+                <td style="width: 10%; text-align: center;">
+                    <a href="{% url 'search' %}" style="text-decoration:none;"><span
+                            style="font-family:Arial,Helvetica,sans-serif"><strong><span style="font-size:200%"><span
+                                        style="color:#4285f4">D</span><span style="color:#ea4335">o</span><span
+                                        style="color:#fbbc05">n</span><span style="color:#4285f4">g</span><span
+                                        style="color:#34a853">l</span><span
+                                        style="color:#ea4335">e</span></span></strong></span>
+                    </a>
+                </td>
+                <td style="width: 90%; text-align: center;">
+                    <form id="myForm" method="post" action="#">{% csrf_token %}
+                        <input id="qInput" type="search" style="width:530px;height:24pt" name="q" value="{{ q }}"
+                            required></input>&nbsp;&nbsp;<button style="line-height: 15pt;">&nbsp;검색&nbsp;</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <p>'{{ q }}'에 대한 상세 검색 결과입니다.</p>
+    <br>
+    <table style="border-top: 1px solid #5558a4;">
+        <tbody>
+            {% for item in result %}
+            <tr>
+                <td style="border-bottom: 1px solid #5558a4;"><img src="{{ item.imgurl }}" width="100px"></img></td>
+                <td style="border-bottom: 1px solid #5558a4;"><b><a href="{{ item.url }}" style="font-size: 150%;">{{ item.product_name }}</a></b><br><span style="font-size: 125%; color: #850d31;"><span
+                            class="price">{{ item.price }}</span> 원&nbsp;&nbsp;<span style="color:#88680f">{{ item.star }} 점</span></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <table style="border:none;margin-left:none;margin-right:none;">
+        <tbody>
+            <tr>
+                <td style="text-align: center;">
+                    <a href="{% url 'result' q %}">돌아가기</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    
+</body>
+
+</html>
